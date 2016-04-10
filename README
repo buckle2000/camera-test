@@ -1,5 +1,0 @@
-This is a test of a problem I'm having with FlxTilemap and FlxCamera.
-
-If you run the demo and then move the character to the right you'll see that it flickers when loading the next tile. Also, it should show the tilemap across the full width of the screen but does not.
-
-It does this when I first display the tilemap on a smaller camera and then replace the smaller camera.

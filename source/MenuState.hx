@@ -27,19 +27,22 @@ class MenuState extends FlxState {
         player = new FlxSprite(100, 100);
         player.makeGraphic(64, 64, FlxColor.BLUE);
         add(player);
-
+		
         var camera = new FlxCamera(0, 0, Std.int(FlxG.width/2), Std.int(FlxG.height));
         camera.follow(player);
         FlxG.cameras.reset(camera);
+		
+		// reloadTilemap(); // if you reload here but not in the update block, still bug
 	}
 
 	override public function update(elapsed:Float):Void
 	{
         if (!reloadedCamera) {
+			reloadTilemap(); // but if you reload here, it works.
             reloadedCamera = true;
             var camera2 = new FlxCamera(0, 0, FlxG.width, FlxG.height);
             camera2.follow(player);
-            FlxG.cameras.reset(camera2);
+			FlxG.cameras.reset(camera2);
         }
         
         if (FlxG.keys.pressed.W) {
@@ -55,5 +58,13 @@ class MenuState extends FlxState {
             player.x += 10;
         }
 		super.update(elapsed);
+	}
+	
+	public function reloadTilemap(){
+		remove(tilemap);
+		tilemap = new FlxTilemap();
+        var mapData = Assets.getText("assets/data/map1.csv");
+        tilemap.loadMapFromCSV(mapData, "assets/images/tiles.png", 64, 64);
+        add(tilemap);
 	}
 }
